@@ -131,7 +131,8 @@
             <a href="https://www.google.com/">Google</a>
             <br>
             <br>
-            <a href="https://waninko.github.io/GETeamWorking/ssp/stein_saks_papir_modul1_221119.html">Stein, saks, papir</a>
+            <a href="https://waninko.github.io/GETeamWorking/ssp/stein_saks_papir_modul1_221119.html">Stein, saks,
+                papir</a>
         </div>
         <div class="content"> Select Persona from dropdown
             <select id="selectorA" onchange="selectedV(this)">
@@ -140,7 +141,7 @@
                 <option>Jack-o-Lantern</option>
                 <option>Pixie</option>
                 <option>Incubus</option>
-                <option></option>
+                
             </select>
             <select id="selectorB" onchange="selectedVB(this)">
                 <option>none</option>
@@ -148,7 +149,7 @@
                 <option>Jack-o-Lantern</option>
                 <option>Pixie</option>
                 <option>Incubus</option>
-                <option></option>
+               
             </select>
             <div id="outputDiv" style="font-size: 30px; "></div>
         </div>
@@ -172,9 +173,9 @@
             //Denne funskjonen henter ut valuen av selector b, og putter det inn i variabelen "bValue"
             bValue = selected.value;
             total();
-        }
+        } 
         total();
-        console.log(aValue, bValue)
+      
         function total() {
 
             //Her setter jeg hvilke resultat du får om du har valgt Arsene på "dropdown A" - og hva du får for hver en kombinasjon av valgene i dropdown B
