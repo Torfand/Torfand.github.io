@@ -111,7 +111,30 @@
 </head>
 
 <body>
-    <div class="page">
+    <div class="page" id="page">
+
+        <script>
+            let page = document.getElementById("page");
+
+
+
+
+
+            //model
+            let selectedA;
+            let selectedB;
+            let resultPersona = ['Mandrake', 'Agathion', 'Slime', 'Incubus', 'Berith', 'Succubus', 'Pixie']
+            let choices = ['Arsene', 'Jack-o-Lantern', 'Pixie', 'Incubus']
+            display();
+
+
+
+
+            //view
+
+            function display() {
+
+                page.innerHTML = ` 
         <h1 class="header"> Persona 5 Fuse Compendium
             <br>
             <br>
@@ -128,75 +151,60 @@
             <a href="https://waninko.github.io/GETeamWorking/ssp/stein_saks_papir_modul1_221119.html">Stein, saks,
                 papir</a>
         </div>
-        <div class="content"> Select Persona from dropdown
-            <select id="selectorA" onchange="selectedV(this)">
+
+          <div class="content"> Select Persona from dropdown
+            <select id="selectorA" onchange="selected(this)">
                 <option>none</option>
-                <option>Arsene</option>
-                <option>Jack-o-Lantern</option>
-                <option>Pixie</option>
-                <option>Incubus</option>
+                <option>${choices[0]}</option>
+                <option>${choices[1]}</option>
+                <option>${choices[2]}</option>
+                <option>${choices[3]}</option>
 
             </select>
-            <select id="selectorB" onchange="selectedVB(this)">
+            <select id="selectorB" onchange="selected(this)">
                 <option>none</option>
-                <option>Arsene</option>
-                <option>Jack-o-Lantern</option>
-                <option>Pixie</option>
-                <option>Incubus</option>
+                <option>${choices[0]}</option>
+                <option>${choices[1]}</option>
+                <option>${choices[2]}</option>
+                <option>${choices[3]}</option>
 
             </select>
             <div id="outputDiv" style="font-size: 30px; "></div>
         </div>
         <div class="footer"> Her er en footer </div>
-    </div>
-    <script>
-        // Her lager jeg Variablene "output", aValue, og bValue + sier at outputDiv sin innerhtml er output variablen 
-        let output = document.getElementById("outputDiv");
-        let aValue;
-        let bValue;
+    </div>` ;
 
-        function selectedV(selected) {
-            //Denne funskjonen henter ut valuen av selector a, og putter det inn i variabelen "aValue"
-            aValue = selected.value;
-            total();
-        }
-        function selectedVB(selected) {
-            //Denne funskjonen henter ut valuen av selector b, og putter det inn i variabelen "bValue"
-            bValue = selected.value;
-            total();
-        }
-        total();
+                selected();
+             
+            }
 
-        function total() {
+            //controller
+            function selected() {
+                let output = document.getElementById("outputDiv")
+                let personaA = document.getElementById("selectorA")
+                let personaB = document.getElementById("selectorB")
+                console.log(choices)
+                if (personaA.value == choices[0] && personaB.value == choices[1]) { output.innerHTML = resultPersona[0] }
+                else if (personaA.value == choices[0] && personaB.value == choices[2]) { output.innerHTML = resultPersona[1] }
+                else if (personaA.value == choices[0] && personaB.value == choices[3]) { output.innerHTML = resultPersona[2] }
 
-            //Her setter jeg hvilke resultat du får om du har valgt Arsene på "dropdown A" - og hva du får for hver en kombinasjon av valgene i dropdown B
-            if (aValue == 'none' && bValue == 'none') { output.innerHTML = ' ' };
-            if (aValue == 'Arsene' && bValue == 'Arsene') { output.innerHTML = "Not avaliable as a fuse option" };
-            if (aValue == 'Arsene' && bValue == 'Jack-o-Lantern') { output.innerHTML = "Mandrake" + '<br>' + "<img src='mandrale.jpg' height='200' width='200': <img> " };
-            if (aValue == 'Arsene' && bValue == 'Pixie') { output.innerHTML = "Agathion" + '<br>' + "<img src='Agathion.png' height='200' width='200': <img> " };
-            if (aValue == 'Arsene' && bValue == 'Incubus') { output.innerHTML = "Slime" + '<br>' + "<img src='Slime.jpg' height='200' width='200': <img> " };
-            //Her setter jeg hvilke resultat du får om du har valgt Jack-o-Lantern på "dropdown A" - og hva du får for hver en kombinasjon av valgene i dropdown B
-            if (aValue == 'Jack-o-Lantern' && bValue == 'Arsene') { output.innerHTML = "Mandrake" + '<br>' + "<img src='mandrale.jpg' height='200' width='200': <img> " };
-            if (aValue == 'Jack-o-Lantern' && bValue == 'Jack-o-Lantern') { output.innerHTML = "Not avaliable as a fuse option" };
-            if (aValue == 'Jack-o-Lantern' && bValue == 'Pixie') { output.innerHTML = "Incubus" };
-            if (aValue == 'Jack-o-Lantern' && bValue == 'Incubus') { output.innerHTML = "Berith" };
-            //Her setter jeg hvilke resultat du får om du har valgt Pixie på "dropdown A" - og hva du får for hver en kombinasjon av valgene i dropdown B
-            if (aValue == 'Pixie' && bValue == 'Arsene') { output.innerHTML = 'Agathion' };
-            if (aValue == 'Pixie' && bValue == 'Jack-o-Lantern') { output.innerHTML = 'Incubus' };
-            if (aValue == 'Pixie' && bValue == 'Pixie') { output.innerHTML = "Not avaliable as a fuse option" };
-            if (aValue == 'Pixie' && bValue == 'Incubus') { output.innerHTML = "Succubus" };
-            //Her setter jeg hvilke resultat du får om du har valgt Incubus på "dropdown A" - og hva du får for hver en kombinasjon av valgene i dropdown B
-            if (aValue == 'Incubus' && bValue == 'Arsene') { output.innerHTML = "Not avaliable as a fuse option" };
-            if (aValue == 'Incubus' && bValue == 'Jack-o-Lantern') { output.innerHTML = "Pixie" };
-            if (aValue == 'Incubus' && bValue == 'Pixie') { output.innerHTML = "Not avaliable as a fuse option" };
-            if (aValue == 'Incubus' && bValue == 'Incubus') { output.innerHTML = "Not avaliable as a fuse option" };
-            //DRY THOOOOOO!!!
+                else if (personaA.value == choices[1] && personaB.value == choices[0]) { output.innerHTML = resultPersona[0] }
+                else if (personaA.value == choices[1] && personaB.value == choices[2]) { output.innerHTML = resultPersona[3] }
+                else if (personaA.value == choices[1] && personaB.value == choices[3]) { output.innerHTML = resultPersona[4] }
 
+                else if (personaA.value == choices[2] && personaB.value == choices[0]) { output.innerHTML = resultPersona[1] }
+                else if (personaA.value == choices[2] && personaB.value == choices[1]) { output.innerHTML = resultPersona[3] }
+                else if (personaA.value == choices[2] && personaB.value == choices[3]) { output.innerHTML = resultPersona[5] }
 
+                else if (personaA.value == choices[3] && personaB.value == choices[1]) { output.innerHTML = resultPersona[6] }
+               else if (personaA.value == 'none' && personaB.value == 'none') { output.innerHTML = ' ' }
+                else {
 
-        }
-        // Denne funksjonen toggler "side-menyen" av og på 
-        function toggleVisibility() {
+                    output.innerHTML = ' Not avaliable as a fuse option'
+                }
+            }
+
+            function toggleVisibility() {
             let shmenu = document.getElementById('meny')
             document.getElementById('meny').classList.toggle('menu')
             if (shmenu.style.display == 'none') { shmenu.style.display = ' initial' }
@@ -206,13 +214,8 @@
         }
 
 
+        </script>
 
 
 
-
-
-
-    </script>
 </body>
-
-</html>
