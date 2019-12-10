@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Obligatorisk Oppgave 2</title>
+
+    <style>
+        body {
+            user-select: none;
+
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content">
+    </div>
+    <script>
+
+        //Hjelpe  Variabler
+        let output = document.getElementById("content")
+
+
+        //model
+        let clickedbar = 'Ingen'
+        let numbers = [7, 8, 2, 5, 3];
+        let isbuttondisabled = true;
+        display();
+
+        //view
+
+        function display() {
+            // denne slår på knappene " remove og edit" om en stolpe er valgt
+            let toggle = isbuttondisabled == true ? 'disabled' : 'enabled'
+            // denne tegner opp svg "boxen"
+            let svgOutput = '';
+
+            // her sier jeg at "i" er null, og om "i" er mindre enn lengden til "numbers arrayet" så legg til 1 på "i"
+            for (let i = 0; i < numbers.length; i++) {
+                // her ber jeg numberOfBar være lik i og plusse på 1
+                let numberOfBar = i + 1;
+
+                svgOutput += createBars(numbers[i], i + 1);
+            }
+
+            output.innerHTML =
+                ` <svg id="charts" width="500" viewbox= " 0 0 80 60">${svgOutput}</svg>
+                <br>
+                Du har Valgt stolpe : <i id="outText">${clickedbar}</i>
+                <br>
+                Verdi : <input id="value" type="number" min="1" max ="10" selected value = 1 >
+                <button id="addBtn" onclick="action('add')">Legg til stolpe</button>
+                <button id="removeBtn" ${toggle} onclick="action('remove')" >Fjærn stolpe</button>
+                <button id="changeBtn" ${toggle} onclick="action('edit')" >Endre på valgt stolpe</button>`;
+            //  console.log(changeBtn , removeBtn)
+
+        }
+
+
+        function createBars(number, numberOfBar) {
+            // i denne funskjonen lager jeg bars, og setter verdier på di, feks vidde høyde og mellomrom 
+            const width = 8;
+            const spacing = 2;
+            let x = (numberOfBar - 1) * (width + spacing);
+            let height = number * 6;
+            let y = 60 - height
+            let border = 0;
+            let color = colorBars(1, 10, numberOfBar);
+            if (clickedbar != 'Ingen' && numberOfBar == clickedbar) {
+                border = 1;
+            }
+                // her returnerer jeg rektangler til svg
+            return ` <rect onclick ="chosenbar(${numberOfBar})"
+            width="${width}" 
+            height="${height}" 
+            x="${x}"
+            y="${y}"
+            fill="${color}"
+            stroke-width="${border}"
+            stroke="black">
+            </rect>` ;
+        }
+
+        function colorBars(min, max, val) {
+            // denne funksjonen lager farge og sender det tilbake til barene
+            let minHue = 240, maxhue = 0;
+            let currentPrecentage = (val - min) / (max - min)
+            let cString = "hsl(" + ((currentPrecentage * (maxhue - minHue)) + minHue) + ",100%,50%)";
+            return cString;
+
+            display();
+        }
+
+
+
+        //controller
+        function chosenbar(numberOfBar) {
+            // denne funksjonen sier at om en bar er valgt så skal den outpute hvilket nummer en har valgt , og om en bar er valgt skal den enable knappene "remove og edit"
+
+            if (clickedbar == numberOfBar) {
+                isbuttondisabled = true;
+                clickedbar = 'Ingen'
+
+            } else {
+
+                clickedbar = numberOfBar;
+                isbuttondisabled = false;
+
+            }
+
+            display();
+        }
+        function action(typeofAction) {
+            // denne funksjonen tilsier hva knappene gjør
+            let inputValue = document.getElementById("value")
+
+            if (inputValue.value) {
+
+                if (typeofAction == 'add') {
+                    if (inputValue.value < 1 || inputValue.value > 9) {
+                        return alert("Kan kun legge til en stople med verdi mellom 1 og 10")
+                    }
+                    if (numbers.length > 7) {
+                        numbers.length = 8
+                        return alert("Kan ikke ha mer enn 8 bars om gangen =(")
+                    }
+                    // push dytter in input sin verdi i arrayet "numbers"
+                    numbers.push(parseInt(inputValue.value))
+                    display();
+                }
+
+                if (typeofAction == 'edit') {
+                    if (inputValue.value == 0 || inputValue.value > 9) {
+                        return alert('Verdi må vere mellom 1 og 10')
+                    }
+                    // redigerer en bar(tall) i arrayet "numbers" utifra input sin verdi
+                    numbers[parseInt(clickedbar) - 1] = parseInt(inputValue.value);
+
+                    display();
+                }
+
+                if (typeofAction == 'remove') {
+                    if (numbers.length == 1) {
+
+
+                        clickedbar = 'Ingen'
+
+                    }
+                    // splice i dette tilfellet fjerner en bar(tall) fra arrayet
+                    numbers.splice(parseInt(clickedbar) - 1, 1)
+                    display();
+                }
+            }
+        }
+
+    </script>
+</body>
+
+</html>
