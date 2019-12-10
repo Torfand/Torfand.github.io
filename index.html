@@ -85,7 +85,7 @@
         }
 
         div.content {
-
+            text-align: center;
 
             grid-area: content;
         }
@@ -169,7 +169,7 @@
                 <option>${choices[3]}</option>
 
             </select>
-            <div id="outputDiv" style="font-size: 30px; "></div>
+            <div id="result" style="font-size: 30px; "></div>
         </div>
         <div class="footer"> Her er en footer </div>
     </div>` ;
@@ -180,7 +180,7 @@
 
             //controller
             function selected() {
-                let output = document.getElementById("outputDiv")
+                let output = document.getElementById("result")
                 let personaA = document.getElementById("selectorA")
                 let personaB = document.getElementById("selectorB")
                 console.log(choices)
