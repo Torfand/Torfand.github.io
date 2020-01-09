@@ -10,9 +10,6 @@
     <style>
         body {
             user-select: none;
-
-
-
         }
     </style>
 </head>
@@ -21,30 +18,19 @@
     <div id="content">
     </div>
     <script>
-
         //Hjelpe  Variabler
         let output = document.getElementById("content")
-
-
         //model
         let clickedbar = 'Ingen'
         let numbers = [7, 8, 2, 5, 3];
-        display();
-        
         //view
-        
+        display();
         function display() {
-            // denne slår på knappene " remove og edit" om en stolpe er valgt
-            let isbuttondisabled = true;
-            let toggle = isbuttondisabled == true ? 'disabled' : ' '
-
+        
             let svgOutput = '';
 
-            // her sier jeg at "i" er null, og om "i" er mindre enn lengden til "numbers arrayet" så legg til 1 på "i"
             for (let i = 0; i < numbers.length; i++) {
-
                 let numberOfBar = i + 1;
-
                 svgOutput += createBars(numbers[i], i + 1);
             }
 
@@ -55,15 +41,11 @@
                 <br>
                 Verdi : <input id="value" type="number" min="1" max ="10" selected value = 1 >
                 <button id="addBtn" onclick="action('add')">Legg til stolpe</button>
-                <button id="removeBtn" ${toggle} onclick="action('remove')" >Fjærn stolpe</button>
-                <button id="changeBtn" ${toggle} onclick="action('edit')" >Endre på valgt stolpe</button>`;
-
-
+                <button id="removeBtn"  onclick="removeBar()" ${clickedbar == 'Ingen' ? 'disabled' : ''} >Fjærn stolpe</button>
+                <button id="changeBtn"  onclick="action('edit')" ${clickedbar == 'Ingen' ? 'disabled' : ''} >Endre på valgt stolpe</button>`;
         }
-
-
         function createBars(number, numberOfBar) {
-            // i denne funskjonen lager jeg bars, og setter verdier på di, feks vidde høyde og mellomrom 
+         
             const width = 8;
             const spacing = 2;
             let x = (numberOfBar - 1) * (width + spacing);
@@ -74,7 +56,7 @@
             if (clickedbar != 'Ingen' && numberOfBar == clickedbar) {
                 border = 1;
             }
-            // her returnerer jeg rektangler 
+     
             return ` <rect onclick ="chosenbar(${numberOfBar})"
             width="${width}" 
             height="${height}" 
@@ -85,39 +67,26 @@
             stroke="black">
             </rect>` ;
         }
-
         function colorBars(min, max, val) {
-            // denne funksjonen lager farge og sender det tilbake til barene
             let minHue = 0, maxhue = 240;
             let currentPrecentage = (val - min) / (max - min)
             let cString = "hsl(" + ((currentPrecentage * (maxhue - minHue)) + minHue) + ",100%,50%)";
             return cString;
-
             display();
         }
-
-
-
         //controller
         function chosenbar(numberOfBar) {
-            // denne funksjonen sier at om en bar er valgt så skal den outpute hvilket nummer en har valgt , og om en bar er valgt skal den enable knappene "remove og edit"
 
             if (clickedbar == numberOfBar) {
-                isbuttondisabled = true;
+     
                 clickedbar = 'Ingen'
-
             } else {
-
                 clickedbar = numberOfBar;
-                isbuttondisabled = false;
-
+           
             }
-
             display();
         }
-
         function action(typeofAction) {
-
             let inputValue = document.getElementById("value");
             if (typeofAction == 'add') {
                 if (inputValue.value < 1 || inputValue.value > 10) {
@@ -127,33 +96,29 @@
                     numbers.length = 8
                     return alert("Kan ikke ha mer enn 8 bars om gangen =(")
                 }
-                // push dytter in input sin verdi i arrayet "numbers"
+
                 numbers.push(parseInt(inputValue.value))
                 display();
             }
-
             if (typeofAction == 'edit') {
                 if (inputValue.value == 0 || inputValue.value > 10) {
                     return alert('Verdi må vere fra 1 til 10')
                 }
-                // redigerer en bar(tall) i arrayet "numbers" utifra input sin verdi
+
                 numbers[parseInt(clickedbar) - 1] = parseInt(inputValue.value);
-
                 display();
             }
-
-            if (typeofAction == 'remove') {
-                if (numbers.length == 1) {
-                    clickedbar = 'Ingen'
-                    isbuttondisabled = true;
-                }
-                // splice i dette tilfellet fjerner en bar(tall) fra arrayet
-                numbers.splice(parseInt(clickedbar) - 1, 1)
-                display();
-            }
-
+         
         }
-
+        function removeBar() {
+            
+                numbers.splice(parseInt(clickedbar) - 1, 1)
+                clickedbar = 'Ingen'
+                
+                display();
+            
+        }
+        
     </script>
 </body>
 
